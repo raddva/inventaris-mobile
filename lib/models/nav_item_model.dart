@@ -9,11 +9,11 @@ class NavItemModel {
 
 List<NavItemModel> bottomNavItems = [
   NavItemModel(
-    title: "Chat",
+    title: "Home",
     rive: RiveModel(
         src: "assets/RiveAssets/animated-icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity"),
+        artboard: "HOME",
+        stateMachineName: "HOME_interactivity"),
   ),
   NavItemModel(
     title: "Search",
@@ -23,18 +23,11 @@ List<NavItemModel> bottomNavItems = [
         stateMachineName: "SEARCH_Interactivity"),
   ),
   NavItemModel(
-    title: "Timer",
+    title: "Inventory",
     rive: RiveModel(
         src: "assets/RiveAssets/animated-icons.riv",
-        artboard: "TIMER",
-        stateMachineName: "TIMER_Interactivity"),
-  ),
-  NavItemModel(
-    title: "Notification",
-    rive: RiveModel(
-        src: "assets/RiveAssets/animated-icons.riv",
-        artboard: "BELL",
-        stateMachineName: "BELL_Interactivity"),
+        artboard: "SETTINGS",
+        stateMachineName: "SETTINGS_Interactivity"),
   ),
   NavItemModel(
     title: "Profile",
