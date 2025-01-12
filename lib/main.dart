@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:inventaris/components/navbar.dart';
+import 'package:inventaris/Screens/Welcome/welcome_screen.dart';
+import 'package:inventaris/constants.dart';
 import 'package:inventaris/splash_screen.dart';
 
 void main() {
@@ -9,15 +10,16 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Inventaris',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        primaryColor: kPrimaryColor,
+        scaffoldBackgroundColor: Colors.white,
       ),
-      home: SplashScreen(),
+      home: WelcomeScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
