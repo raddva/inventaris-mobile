@@ -2,7 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:inventaris/models/nav_item_model.dart';
+import 'package:inventaris/pages/inventory.dart';
+import 'package:inventaris/pages/profile.dart';
+import 'package:inventaris/pages/search.dart';
+import 'package:inventaris/pages/settings.dart';
 import 'package:rive/rive.dart';
+import '../pages/home.dart';
 
 const Color navBgColor = Color(0xFF17203A);
 
@@ -17,7 +22,14 @@ class _NavBarState extends State<NavBar> {
   List<SMIBool> riveIconInputs = [];
   List<StateMachineController?> controllers = [];
   int selectedNavIndex = 0;
-  List<String> pages = ["Home", "Search", "Inventory", "Profile"];
+
+  final List<Widget> pages = [
+    HomePage(),
+    SearchPage(),
+    InventoryPage(),
+    SettingsPage(),
+    ProfilePage(),
+  ];
 
   void animateTheIcon(int index) {
     if (index < riveIconInputs.length) {
@@ -60,9 +72,7 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text(pages[selectedNavIndex]),
-      ),
+      body: pages[selectedNavIndex],
       bottomNavigationBar: SafeArea(
         child: Container(
           padding: EdgeInsets.all(12),

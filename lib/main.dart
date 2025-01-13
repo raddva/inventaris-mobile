@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inventaris/Screens/Welcome/welcome_screen.dart';
+// import 'package:inventaris/Screens/Welcome/welcome_screen.dart';
 import 'package:inventaris/constants.dart';
 import 'package:inventaris/splash_screen.dart';
 

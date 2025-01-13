@@ -26,6 +26,13 @@ List<NavItemModel> bottomNavItems = [
     title: "Inventory",
     rive: RiveModel(
         src: "assets/RiveAssets/animated-icons.riv",
+        artboard: "REFRESH/RELOAD",
+        stateMachineName: "RELOAD_Interactivity"),
+  ),
+  NavItemModel(
+    title: "Settings",
+    rive: RiveModel(
+        src: "assets/RiveAssets/animated-icons.riv",
         artboard: "SETTINGS",
         stateMachineName: "SETTINGS_Interactivity"),
   ),

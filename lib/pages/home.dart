@@ -10,10 +10,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late List<GDPData> _chartData;
+  late TooltipBehavior _tooltipBehavior;
 
   @override
   void initState() {
     _chartData = getChartData();
+    _tooltipBehavior = TooltipBehavior(enable: true);
     super.initState();
   }
 
@@ -21,14 +23,107 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SfCircularChart(
-          series: <CircularSeries>[
-            PieSeries<GDPData, String>(
-              dataSource: _chartData,
-              xValueMapper: (GDPData data, _) => data.continent,
-              // yValueMapper: (GDPData, data, _) => data.gdp
-            )
-          ],
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 12,
+                        height: 12,
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        "Ditempatkan: 150",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 8),
+
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 12,
+                        height: 12,
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        "Belum Ditempatkan: 85",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 16),
+
+              // Chart Container
+              Expanded(
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 4,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: SfCircularChart(
+                      title: ChartTitle(text: "Chart Kondisi Barang"),
+                      legend: Legend(
+                        isVisible: true,
+                        overflowMode: LegendItemOverflowMode.wrap,
+                      ),
+                      tooltipBehavior: _tooltipBehavior,
+                      series: <CircularSeries>[
+                        DoughnutSeries<GDPData, String>(
+                          dataSource: _chartData,
+                          xValueMapper: (GDPData data, _) => data.continent,
+                          yValueMapper: (GDPData data, _) => data.gdp,
+                          dataLabelSettings: DataLabelSettings(
+                            isVisible: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -40,7 +135,6 @@ class _HomePageState extends State<HomePage> {
       GDPData('Tidak Layak', 28),
       GDPData('Rusak', 9),
     ];
-
     return chartData;
   }
 }
