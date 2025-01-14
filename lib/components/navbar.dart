@@ -1,7 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:inventaris/models/nav_item_model.dart';
+import 'package:inventaris/modules/nav_item_model.dart';
 import 'package:inventaris/pages/inventory.dart';
 import 'package:inventaris/pages/profile.dart';
 import 'package:inventaris/pages/search.dart';

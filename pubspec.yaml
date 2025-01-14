@@ -37,6 +37,8 @@ dependencies:
   rive: ^0.13.20
   syncfusion_flutter_charts: ^28.1.38
   flutter_svg: ^2.0.17
+  shared_preferences: ^2.3.5
+  http: ^1.2.2
 
 dev_dependencies:
   flutter_test:

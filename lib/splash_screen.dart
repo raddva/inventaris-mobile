@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:inventaris/components/navbar.dart';
+// import 'package:inventaris/components/navbar.dart';
+import 'package:inventaris/pages/login.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const NavBar()),
+        MaterialPageRoute(builder: (context) => loginScreen()),
       );
     });
   }

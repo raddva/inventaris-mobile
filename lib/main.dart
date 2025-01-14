@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:inventaris/Screens/Welcome/welcome_screen.dart';
 import 'package:inventaris/constants.dart';
-import 'package:inventaris/pages/body.dart';
+// import 'package:inventaris/pages/body.dart';
 import 'package:inventaris/pages/login.dart';
 import 'package:inventaris/splash_screen.dart';
 
@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       // home: WelcomeScreen(),
-      home: loginScreen(),
-      // home: SplashScreen(),
+      // home: loginScreen(),
+      home: SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
