@@ -23,6 +23,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Inventory Dashboard'),
+          centerTitle: true,
+          titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          backgroundColor: Colors.transparent,
+        ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -47,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        "Ditempatkan: 150",
+                        "Sudah Ditempatkan: 150",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

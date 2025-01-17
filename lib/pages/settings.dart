@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:inventaris/screens/master_category.dart';
 import 'package:inventaris/screens/master_pj.dart';
 import 'package:inventaris/screens/master_product.dart';
 import 'package:inventaris/screens/master_status.dart';
 import 'package:inventaris/screens/master_user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -13,31 +16,67 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  bool isAdmin = false;
+  bool isLoading = true;
+  Map<String, dynamic>? userData;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAdminStatus();
+  }
+
+  Future<void> _checkAdminStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? userJson = prefs.getString('user');
+
+    if (userJson != null) {
+      final userData = jsonDecode(userJson) as Map<String, dynamic>;
+
+      setState(() {
+        isAdmin = userData['isadmin'] ?? false;
+        isLoading = false;
+      });
+    } else {
+      setState(() {
+        isAdmin = false;
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings"),
+        title: const Text('Master Inventory'),
+        centerTitle: true,
+        titleTextStyle:
+            const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        backgroundColor: Colors.transparent,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: GridView.count(
-          crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          children: [
-            _buildCard("Master User", Icons.person, Colors.blue, ListUser()),
-            _buildCard("Master Status", Icons.check_circle, Colors.green,
-                ListStatus()),
-            _buildCard(
-                "Master PJ", Icons.location_pin, Colors.orange, ListPJ()),
-            _buildCard("Master Category", Icons.category, Colors.purple,
-                ListCategory()),
-            _buildCard("Master Product", Icons.shopping_cart, Colors.teal,
-                ListProduct()),
-          ],
-        ),
-      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                children: [
+                  if (isAdmin)
+                    _buildCard("User", Icons.person, Colors.blue, ListUser()),
+                  _buildCard(
+                      "Status", Icons.check_circle, Colors.green, ListStatus()),
+                  _buildCard("PJ & Location", Icons.location_pin, Colors.orange,
+                      ListPJ()),
+                  _buildCard("Category", Icons.category, Colors.purple,
+                      ListCategory()),
+                  _buildCard("Product", Icons.shopping_cart, Colors.teal,
+                      ListProduct()),
+                ],
+              ),
+            ),
     );
   }
 
@@ -62,11 +101,11 @@ class _SettingsPageState extends State<SettingsPage> {
               size: 50,
               color: color,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               title,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),

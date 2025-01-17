@@ -29,7 +29,7 @@ class _ListPJState extends State<ListPJ> {
       });
     } catch (e) {
       setState(() => isLoading = false);
-      _showError("Failed to load pjs: $e");
+      _showError("$e");
     }
   }
 
@@ -76,7 +76,7 @@ class _ListPJState extends State<ListPJ> {
                   );
                   await _loadCategories();
                 } catch (e) {
-                  _showError("Failed to add pj: $e");
+                  _showError("$e");
                 }
               },
               child: const Text("Add"),
@@ -136,7 +136,7 @@ class _ListPJState extends State<ListPJ> {
                     );
                     await _loadCategories();
                   } catch (e) {
-                    _showError("Failed to edit pj: $e");
+                    _showError("$e");
                   }
                 },
                 child: const Text("Save"),
@@ -146,7 +146,7 @@ class _ListPJState extends State<ListPJ> {
         },
       );
     } catch (e) {
-      _showError("Failed to fetch pj details: $e");
+      _showError("$e");
     }
   }
 
@@ -155,7 +155,7 @@ class _ListPJState extends State<ListPJ> {
       await _controller.removePJ(id);
       await _loadCategories();
     } catch (e) {
-      _showError("Failed to remove pj: $e");
+      _showError("$e");
     }
   }
 

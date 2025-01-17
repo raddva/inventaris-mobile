@@ -29,7 +29,7 @@ class _ListCategoryState extends State<ListCategory> {
       });
     } catch (e) {
       setState(() => isLoading = false);
-      _showError("Failed to load categories: $e");
+      _showError("$e");
     }
   }
 
@@ -70,7 +70,7 @@ class _ListCategoryState extends State<ListCategory> {
                   );
                   await _loadCategories();
                 } catch (e) {
-                  _showError("Failed to add category: $e");
+                  _showError("$e");
                 }
               },
               child: const Text("Add"),
@@ -120,7 +120,7 @@ class _ListCategoryState extends State<ListCategory> {
                         codeController.text, nameController.text);
                     await _loadCategories();
                   } catch (e) {
-                    _showError("Failed to edit category: $e");
+                    _showError("$e");
                   }
                 },
                 child: const Text("Save"),
@@ -130,7 +130,7 @@ class _ListCategoryState extends State<ListCategory> {
         },
       );
     } catch (e) {
-      _showError("Failed to fetch category details: $e");
+      _showError("$e");
     }
   }
 
@@ -139,7 +139,7 @@ class _ListCategoryState extends State<ListCategory> {
       await _controller.removeCategory(id);
       await _loadCategories();
     } catch (e) {
-      _showError("Failed to remove category: $e");
+      _showError("$e");
     }
   }
 
@@ -171,7 +171,7 @@ class _ListCategoryState extends State<ListCategory> {
                   margin: const EdgeInsets.all(10),
                   child: ListTile(
                     title: Text(
-                      "${category['kode'] ?? '-'} (${category['nama'] ?? '-'})",
+                      "${category['nama'] ?? '-'} (${category['kode'] ?? '-'})",
                     ),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,

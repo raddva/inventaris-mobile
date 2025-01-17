@@ -55,7 +55,9 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
-        backgroundColor: Colors.teal,
+        centerTitle: true,
+        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        backgroundColor: Colors.transparent,
       ),
       body: userData == null
           ? const Center(
@@ -71,7 +73,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: [
                         const CircleAvatar(
                           radius: 50,
-                          backgroundColor: Colors.teal,
+                          backgroundColor: Color(0xFF6F35A5),
                           child: Icon(
                             Icons.person,
                             size: 50,
@@ -103,11 +105,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   _buildProfileRow(
                       'Admin', userData!['isadmin'] ? 'Yes' : 'No'),
                   const SizedBox(height: 24),
-                  ElevatedButton(
-                    onPressed: _logout,
-                    child: const Text('Logout'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red, // Button color
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: _logout,
+                      child: const Text(
+                        'Logout',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red, // Button color
+                      ),
                     ),
                   ),
                 ],

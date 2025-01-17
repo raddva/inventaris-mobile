@@ -34,7 +34,7 @@ class _ListStatusState extends State<ListStatus> {
       });
     } catch (e) {
       setState(() => isLoading = false);
-      _showError("Failed to load data: $e");
+      _showError("$e");
     }
   }
 
@@ -83,7 +83,7 @@ class _ListStatusState extends State<ListStatus> {
                   );
                   await _loadData();
                 } catch (e) {
-                  _showError("Failed to add status: $e");
+                  _showError("$e");
                 }
               },
               child: const Text("Add"),
@@ -144,7 +144,7 @@ class _ListStatusState extends State<ListStatus> {
                     );
                     await _loadData();
                   } catch (e) {
-                    _showError("Failed to edit status: $e");
+                    _showError("$e");
                   }
                 },
                 child: const Text("Save"),
@@ -154,7 +154,7 @@ class _ListStatusState extends State<ListStatus> {
         },
       );
     } catch (e) {
-      _showError("Failed to fetch status details: $e");
+      _showError("$e");
     }
   }
 
@@ -163,7 +163,7 @@ class _ListStatusState extends State<ListStatus> {
       await _statusController.removeStatus(id);
       await _loadData();
     } catch (e) {
-      _showError("Failed to remove status: $e");
+      _showError("$e");
     }
   }
 

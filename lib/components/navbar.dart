@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:inventaris/modules/nav_item_model.dart';
 import 'package:inventaris/pages/inventory.dart';
 import 'package:inventaris/pages/profile.dart';
-import 'package:inventaris/pages/search.dart';
+// import 'package:inventaris/pages/search.dart';
 import 'package:inventaris/pages/settings.dart';
 import 'package:rive/rive.dart';
 import '../pages/home.dart';
 
-const Color navBgColor = Color(0xFF17203A);
+const Color navBgColor = Color(0xFF6F35A5);
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -143,7 +143,7 @@ class AnimatedBar extends StatelessWidget {
       height: 4,
       width: isActive ? 20 : 0,
       decoration: BoxDecoration(
-          color: Color(0xFF81B4FF),
+          color: Color(0xFFF1E6FF),
           borderRadius: BorderRadius.all(Radius.circular(12))),
     );
   }
