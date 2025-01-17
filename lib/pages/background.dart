@@ -21,15 +21,15 @@ class Background extends StatelessWidget {
             left: 0,
             child: Image.asset(
               "assets/Images/blob2.png",
-              width: size.width * 0.3,
+              width: size.width * 0.5,
             ),
           ),
           Positioned(
-            top: 0,
+            bottom: 0,
             right: 0,
             child: Image.asset(
               "assets/Images/blob2.png",
-              width: size.width * 0.4,
+              width: size.width * 0.5,
             ),
           ),
           child, // Menambahkan child ke dalam Stack

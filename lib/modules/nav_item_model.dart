@@ -15,13 +15,13 @@ List<NavItemModel> bottomNavItems = [
         artboard: "HOME",
         stateMachineName: "HOME_interactivity"),
   ),
-  NavItemModel(
-    title: "Search",
-    rive: RiveModel(
-        src: "assets/RiveAssets/animated-icons.riv",
-        artboard: "SEARCH",
-        stateMachineName: "SEARCH_Interactivity"),
-  ),
+  // NavItemModel(
+  //   title: "Search",
+  //   rive: RiveModel(
+  //       src: "assets/RiveAssets/animated-icons.riv",
+  //       artboard: "SEARCH",
+  //       stateMachineName: "SEARCH_Interactivity"),
+  // ),
   NavItemModel(
     title: "Inventory",
     rive: RiveModel(

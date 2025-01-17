@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class LoginRepository {
   Future<http.Response> login(String username, String password) {
     return http.post(
-      Uri.parse("http://192.168.69.17:8000/api/auth/signin"),
+      Uri.parse("http://127.0.0.1:8000/api/auth/signin"),
       headers: <String, String>{
         'Content-Type': "application/json; charset=UTF-8"
       },
@@ -21,7 +21,7 @@ class LoginRepository {
 
   Future<http.Response> fetchUserDetails(String token) {
     return http.get(
-      Uri.parse("http://192.168.69.17:8000/api/auth/session"),
+      Uri.parse("http://127.0.0.1:8000/api/auth/session"),
       headers: <String, String>{
         'Authorization': "Bearer $token",
         'Content-Type': "application/json; charset=UTF-8",
@@ -132,7 +132,7 @@ class LoginController {
   Future<void> logout(String token) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.69.17:8000/api/auth/signout'),
+        Uri.parse('http://127.0.0.1:8000/api/auth/signout'),
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json; charset=UTF-8',

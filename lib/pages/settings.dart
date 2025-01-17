@@ -49,7 +49,7 @@ class _SettingsPageState extends State<SettingsPage> {
       elevation: 4,
       child: InkWell(
         onTap: () {
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => route),
           );
