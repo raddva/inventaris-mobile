@@ -26,7 +26,8 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: const Text('Inventory Dashboard'),
           centerTitle: true,
-          titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          titleTextStyle: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
           backgroundColor: Colors.transparent,
         ),
         body: Padding(
@@ -108,7 +109,13 @@ class _HomePageState extends State<HomePage> {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: SfCircularChart(
-                      title: ChartTitle(text: "Chart Kondisi Barang"),
+                      title: ChartTitle(
+                        text: "Chart Kondisi Barang",
+                        textStyle: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       legend: Legend(
                         isVisible: true,
                         overflowMode: LegendItemOverflowMode.wrap,
@@ -119,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                           dataSource: _chartData,
                           xValueMapper: (GDPData data, _) => data.continent,
                           yValueMapper: (GDPData data, _) => data.gdp,
-                          dataLabelSettings: DataLabelSettings(
+                          dataLabelSettings: const DataLabelSettings(
                             isVisible: true,
                           ),
                         ),

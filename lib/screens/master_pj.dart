@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:inventaris/data_modules/pj_model.dart';
 
@@ -29,7 +30,7 @@ class _ListPJState extends State<ListPJ> {
       });
     } catch (e) {
       setState(() => isLoading = false);
-      _showError("$e");
+      _showError(context, e.toString());
     }
   }
 
@@ -76,7 +77,7 @@ class _ListPJState extends State<ListPJ> {
                   );
                   await _loadCategories();
                 } catch (e) {
-                  _showError("$e");
+                  _handleError(e);
                 }
               },
               child: const Text("Add"),
@@ -136,7 +137,7 @@ class _ListPJState extends State<ListPJ> {
                     );
                     await _loadCategories();
                   } catch (e) {
-                    _showError("$e");
+                    _handleError(e);
                   }
                 },
                 child: const Text("Save"),
@@ -146,7 +147,7 @@ class _ListPJState extends State<ListPJ> {
         },
       );
     } catch (e) {
-      _showError("$e");
+      _showError(context, e.toString());
     }
   }
 
@@ -155,13 +156,56 @@ class _ListPJState extends State<ListPJ> {
       await _controller.removePJ(id);
       await _loadCategories();
     } catch (e) {
-      _showError("$e");
+      _showError(context, e.toString());
     }
   }
 
-  void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
+  void _handleError(Object error) {
+    if (error.toString().contains('"message":"Validation error"')) {
+      try {
+        final errorStartIndex = error.toString().indexOf('{');
+        final errorJson =
+            jsonDecode(error.toString().substring(errorStartIndex));
+
+        final errors = errorJson['errors'] as Map<String, dynamic>? ?? {};
+        _showError(context, 'Validation Error', errors: errors);
+      } catch (e) {
+        _showError(context, 'An unexpected error occurred.');
+      }
+    } else {
+      _showError(context, error.toString());
+    }
+  }
+
+  void _showError(BuildContext context, String message,
+      {Map<String, dynamic>? errors}) {
+    String detailedErrors = '';
+    if (errors != null) {
+      errors.forEach((_, messages) {
+        if (messages is List) {
+          detailedErrors += '${messages.join("\n")}\n';
+        } else {
+          detailedErrors += '$messages\n';
+        }
+      });
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: Text('$message\n\n$detailedErrors'.trim()),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 

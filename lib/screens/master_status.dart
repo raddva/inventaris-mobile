@@ -1,6 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:inventaris/data_modules/status_model.dart';
-import 'package:inventaris/data_modules/category_model.dart';
 
 class ListStatus extends StatefulWidget {
   const ListStatus({super.key});
@@ -11,9 +12,7 @@ class ListStatus extends StatefulWidget {
 
 class _ListStatusState extends State<ListStatus> {
   final StatusController _statusController = StatusController();
-  final CategoryController _categoryController = CategoryController();
   List<Map<String, dynamic>> statuses = [];
-  List<Map<String, dynamic>> categories = [];
   bool isLoading = true;
 
   @override
@@ -26,20 +25,17 @@ class _ListStatusState extends State<ListStatus> {
     setState(() => isLoading = true);
     try {
       final fetchedStatuses = await _statusController.fetchStatuses();
-      final fetchedCategories = await _categoryController.fetchCategories();
       setState(() {
         statuses = fetchedStatuses ?? [];
-        categories = fetchedCategories ?? [];
         isLoading = false;
       });
     } catch (e) {
       setState(() => isLoading = false);
-      _showError("$e");
+      _showError(context, e.toString());
     }
   }
 
   Future<void> _addStatus() async {
-    String? selectedCategoryId;
     TextEditingController nameController = TextEditingController();
 
     await showDialog(
@@ -50,18 +46,6 @@ class _ListStatusState extends State<ListStatus> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              DropdownButtonFormField<String>(
-                value: selectedCategoryId,
-                onChanged: (value) =>
-                    setState(() => selectedCategoryId = value),
-                items: categories.map((category) {
-                  return DropdownMenuItem<String>(
-                    value: category['id'].toString(),
-                    child: Text("${category['nama'] ?? 'Unknown'}"),
-                  );
-                }).toList(),
-                decoration: const InputDecoration(labelText: "Category"),
-              ),
               TextField(
                 controller: nameController,
                 decoration: const InputDecoration(labelText: "Name"),
@@ -79,11 +63,10 @@ class _ListStatusState extends State<ListStatus> {
                 try {
                   await _statusController.addStatus(
                     nameController.text,
-                    int.parse(selectedCategoryId!),
                   );
                   await _loadData();
                 } catch (e) {
-                  _showError("$e");
+                  _handleError(e);
                 }
               },
               child: const Text("Add"),
@@ -97,8 +80,6 @@ class _ListStatusState extends State<ListStatus> {
   Future<void> _editStatus(int statusId) async {
     try {
       final statusDetails = await _statusController.fetchStatusDetail(statusId);
-
-      String? selectedCategoryId = statusDetails['categoryid']?.toString();
       TextEditingController nameController =
           TextEditingController(text: statusDetails['nama']);
 
@@ -110,18 +91,6 @@ class _ListStatusState extends State<ListStatus> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                DropdownButtonFormField<String>(
-                  value: selectedCategoryId,
-                  onChanged: (value) =>
-                      setState(() => selectedCategoryId = value),
-                  items: categories.map((category) {
-                    return DropdownMenuItem<String>(
-                      value: category['id'].toString(),
-                      child: Text("${category['nama'] ?? 'Unknown'}"),
-                    );
-                  }).toList(),
-                  decoration: const InputDecoration(labelText: "Category"),
-                ),
                 TextField(
                   controller: nameController,
                   decoration: const InputDecoration(labelText: "Name"),
@@ -140,11 +109,10 @@ class _ListStatusState extends State<ListStatus> {
                     await _statusController.editStatus(
                       statusId,
                       nameController.text,
-                      int.parse(selectedCategoryId!),
                     );
                     await _loadData();
                   } catch (e) {
-                    _showError("$e");
+                    _handleError(e);
                   }
                 },
                 child: const Text("Save"),
@@ -154,7 +122,7 @@ class _ListStatusState extends State<ListStatus> {
         },
       );
     } catch (e) {
-      _showError("$e");
+      _showError(context, e.toString());
     }
   }
 
@@ -163,13 +131,56 @@ class _ListStatusState extends State<ListStatus> {
       await _statusController.removeStatus(id);
       await _loadData();
     } catch (e) {
-      _showError("$e");
+      _showError(context, e.toString());
     }
   }
 
-  void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
+  void _handleError(Object error) {
+    if (error.toString().contains('"message":"Validation error"')) {
+      try {
+        final errorStartIndex = error.toString().indexOf('{');
+        final errorJson =
+            jsonDecode(error.toString().substring(errorStartIndex));
+
+        final errors = errorJson['errors'] as Map<String, dynamic>? ?? {};
+        _showError(context, 'Validation Error', errors: errors);
+      } catch (e) {
+        _showError(context, 'An unexpected error occurred.');
+      }
+    } else {
+      _showError(context, error.toString());
+    }
+  }
+
+  void _showError(BuildContext context, String message,
+      {Map<String, dynamic>? errors}) {
+    String detailedErrors = '';
+    if (errors != null) {
+      errors.forEach((_, messages) {
+        if (messages is List) {
+          detailedErrors += '${messages.join("\n")}\n';
+        } else {
+          detailedErrors += '$messages\n';
+        }
+      });
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: Text('$message\n\n$detailedErrors'.trim()),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -193,7 +204,7 @@ class _ListStatusState extends State<ListStatus> {
                   margin: const EdgeInsets.all(10),
                   child: ListTile(
                     title: Text(
-                      "${status['nama'] ?? '-'}  - ${status['category']['nama'] ?? '-'}",
+                      "${status['nama'] ?? '-'}",
                     ),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,

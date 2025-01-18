@@ -56,7 +56,8 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: const Text('Profile'),
         centerTitle: true,
-        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        titleTextStyle: TextStyle(
+            fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
         backgroundColor: Colors.transparent,
       ),
       body: userData == null

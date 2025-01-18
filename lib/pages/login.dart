@@ -47,8 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                "Hello!",
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 36),
+                "Welcome!",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36),
               ),
               SizedBox(height: size.height * 0.03),
               Image.asset(

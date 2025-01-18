@@ -40,7 +40,7 @@ class StatusController {
     }
   }
 
-  Future<void> addStatus(String name, int categoryId) async {
+  Future<void> addStatus(String name) async {
     try {
       final token = await getToken();
       final response = await http.post(
@@ -51,7 +51,6 @@ class StatusController {
         },
         body: jsonEncode({
           'nama': name,
-          'categoryid': categoryId,
         }),
       );
 
@@ -63,12 +62,11 @@ class StatusController {
     }
   }
 
-  Future<void> editStatus(int id, String name, int categoryId) async {
+  Future<void> editStatus(int id, String name) async {
     try {
       final token = await getToken();
       Map<String, dynamic> requestBody = {
         'nama': name,
-        'categoryid': categoryId,
       };
 
       final response = await http.put(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventaris/screens/trans_inventory.dart';
 
 class InventoryPage extends StatefulWidget {
   const InventoryPage({super.key});
@@ -14,9 +15,11 @@ class _InventoryPageState extends State<InventoryPage> {
       appBar: AppBar(
         title: const Text('Inventory Transaction'),
         centerTitle: true,
-        titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        titleTextStyle: TextStyle(
+            fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
         backgroundColor: Colors.transparent,
       ),
+      body: InventoryListScreen(),
     );
   }
 }

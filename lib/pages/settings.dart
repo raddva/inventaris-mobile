@@ -51,8 +51,8 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         title: const Text('Master Inventory'),
         centerTitle: true,
-        titleTextStyle:
-            const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        titleTextStyle: const TextStyle(
+            fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
         backgroundColor: Colors.transparent,
       ),
       body: isLoading
@@ -66,12 +66,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 children: [
                   if (isAdmin)
                     _buildCard("User", Icons.person, Colors.blue, ListUser()),
-                  _buildCard(
-                      "Status", Icons.check_circle, Colors.green, ListStatus()),
-                  _buildCard("PJ & Location", Icons.location_pin, Colors.orange,
-                      ListPJ()),
                   _buildCard("Category", Icons.category, Colors.purple,
                       ListCategory()),
+                  _buildCard("PJ & Location", Icons.location_pin, Colors.orange,
+                      ListPJ()),
+                  _buildCard(
+                      "Status", Icons.check_circle, Colors.green, ListStatus()),
                   _buildCard("Product", Icons.shopping_cart, Colors.teal,
                       ListProduct()),
                 ],
