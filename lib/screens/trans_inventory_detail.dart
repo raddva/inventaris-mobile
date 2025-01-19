@@ -198,7 +198,7 @@ class _InventoryFormState extends State<InventoryForm> {
                         tempSelectedStatusId != null &&
                         qtyController.text.isNotEmpty) {
                       final newDetail = {
-                        'id': DateTime.now().millisecondsSinceEpoch,
+                        // 'id': DateTime.now().millisecondsSinceEpoch,
                         'productid': int.parse(tempSelectedProductId!),
                         'statusid': int.parse(tempSelectedStatusId!),
                         'pjid': tempSelectedPJId != null
@@ -211,7 +211,6 @@ class _InventoryFormState extends State<InventoryForm> {
                           orElse: () => {'nama': 'Unknown'},
                         )['nama'],
                       };
-                      print(newDetail);
                       _addOrUpdateDetail(newDetail);
                       Navigator.pop(context);
                     } else {
@@ -245,109 +244,113 @@ class _InventoryFormState extends State<InventoryForm> {
           detail['pjid'] != 0 ? (detail['pjid']?.toString()) : null;
 
       await showDialog(
-          context: (context),
-          builder: (context) {
-            return StatefulBuilder(builder: (context, setState) {
-              return AlertDialog(
-                title: Text('Edit Detail'),
-                content: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      DropdownButtonFormField<String>(
-                        value: tempSelectedProductId,
-                        onChanged: (value) {
-                          setState(() {
-                            tempSelectedProductId = value;
-                          });
-                        },
-                        items: products.map((product) {
-                          return DropdownMenuItem<String>(
-                            value: product['id'].toString(),
-                            child: Text(product['nama'] ?? 'Unknown'),
-                          );
-                        }).toList(),
-                        decoration: const InputDecoration(labelText: "Product"),
-                      ),
-                      DropdownButtonFormField<String>(
-                        value: tempSelectedStatusId,
-                        onChanged: (value) {
-                          setState(() {
-                            tempSelectedStatusId = value;
-                          });
-                        },
-                        items: statuses.map((status) {
-                          return DropdownMenuItem<String>(
-                            value: status['id'].toString(),
-                            child: Text(status['nama'] ?? 'Unknown'),
-                          );
-                        }).toList(),
-                        decoration: const InputDecoration(labelText: 'Status'),
-                      ),
-                      DropdownButtonFormField<String>(
-                        value: tempSelectedPJId,
-                        onChanged: (value) {
-                          setState(() {
-                            tempSelectedPJId = value;
-                          });
-                        },
-                        items: pjs.map((pj) {
-                          return DropdownMenuItem<String>(
-                            value: pj['id'].toString(),
-                            child: Text(pj['nama'] ?? 'Unknown'),
-                          );
-                        }).toList(),
-                        decoration: const InputDecoration(
-                            labelText: 'Person in Charge'),
-                      ),
-                      TextFormField(
-                        controller: qtyController,
-                        decoration:
-                            const InputDecoration(labelText: 'Quantity'),
-                        keyboardType: TextInputType.number,
-                      ),
-                      TextFormField(
-                        controller: remarkController,
-                        decoration: const InputDecoration(labelText: 'Remark'),
-                      ),
-                    ],
-                  ),
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('Cancel'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (tempSelectedProductId != null &&
-                          tempSelectedStatusId != null &&
-                          qtyController.text.isNotEmpty) {
-                        final updatedDetail = {
-                          ...detail,
-                          'productid': int.parse(tempSelectedProductId!),
-                          'statusid': int.parse(tempSelectedStatusId!),
-                          'pjid': tempSelectedPJId != null
-                              ? int.parse(tempSelectedPJId!)
-                              : 0,
-                          'qty': int.tryParse(qtyController.text) ?? 0,
-                          'remark': remarkController.text,
-                        };
-                        _addOrUpdateDetail(updatedDetail);
-                        Navigator.pop(context);
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Please fill all fields.')),
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              title: Text('Edit Detail'),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    DropdownButtonFormField<String>(
+                      value: tempSelectedProductId,
+                      onChanged: (value) {
+                        setState(() {
+                          tempSelectedProductId = value;
+                        });
+                      },
+                      items: products.map((product) {
+                        return DropdownMenuItem<String>(
+                          value: product['id'].toString(),
+                          child: Text(product['nama'] ?? 'Unknown'),
                         );
-                      }
-                    },
-                    child: const Text('Save'),
-                  ),
-                ],
-              );
-            });
+                      }).toList(),
+                      decoration: const InputDecoration(labelText: "Product"),
+                    ),
+                    DropdownButtonFormField<String>(
+                      value: tempSelectedStatusId,
+                      onChanged: (value) {
+                        setState(() {
+                          tempSelectedStatusId = value;
+                        });
+                      },
+                      items: statuses.map((status) {
+                        return DropdownMenuItem<String>(
+                          value: status['id'].toString(),
+                          child: Text(status['nama'] ?? 'Unknown'),
+                        );
+                      }).toList(),
+                      decoration: const InputDecoration(labelText: 'Status'),
+                    ),
+                    DropdownButtonFormField<String>(
+                      value: tempSelectedPJId,
+                      onChanged: (value) {
+                        setState(() {
+                          tempSelectedPJId = value;
+                        });
+                      },
+                      items: pjs.map((pj) {
+                        return DropdownMenuItem<String>(
+                          value: pj['id'].toString(),
+                          child: Text(pj['nama'] ?? 'Unknown'),
+                        );
+                      }).toList(),
+                      decoration:
+                          const InputDecoration(labelText: 'Person in Charge'),
+                    ),
+                    TextFormField(
+                      controller: qtyController,
+                      decoration: const InputDecoration(labelText: 'Quantity'),
+                      keyboardType: TextInputType.number,
+                    ),
+                    TextFormField(
+                      controller: remarkController,
+                      decoration: const InputDecoration(labelText: 'Remark'),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Cancel'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (tempSelectedProductId != null &&
+                        tempSelectedStatusId != null &&
+                        qtyController.text.isNotEmpty) {
+                      final updatedDetail = {
+                        ...detail,
+                        'productid': int.parse(tempSelectedProductId!),
+                        'statusid': int.parse(tempSelectedStatusId!),
+                        'pjid': tempSelectedPJId != null
+                            ? int.parse(tempSelectedPJId!)
+                            : 0,
+                        'qty': int.tryParse(qtyController.text) ?? 0,
+                        'remark': remarkController.text,
+                        'productName': products.firstWhere(
+                          (p) => p['id'].toString() == tempSelectedProductId,
+                          orElse: () => {'nama': 'Unknown'},
+                        )['nama'],
+                      };
+                      _addOrUpdateDetail(updatedDetail);
+                      Navigator.pop(context);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text('Please fill all fields.')),
+                      );
+                    }
+                  },
+                  child: const Text('Save'),
+                ),
+              ],
+            );
           });
+        },
+      );
     } catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Error: $e')));
@@ -423,7 +426,7 @@ class _InventoryFormState extends State<InventoryForm> {
             detail['productid'],
             detail['statusid'],
             detail['remark'],
-            detail['pjid'],
+            detail['pjid'] ?? 0,
             detail['qty'],
           );
         }
@@ -441,16 +444,16 @@ class _InventoryFormState extends State<InventoryForm> {
             await ApiService().editInventoryDetail(
               detail['id'],
               widget.inventory!.id,
-              int.parse(detail['productid']),
-              int.parse(detail['statusid']),
+              int.parse(detail['productid'].toString()),
+              int.parse(detail['statusid'].toString()),
               detail['remark'],
-              int.parse(detail['pjid'] ?? 0),
+              int.parse(detail['pjid']?.toString() ?? '0'),
               detail['qty'],
             );
           } else {
             await ApiService().addInventoryDetail(
               widget.inventory!.id,
-              (detail['productid']),
+              detail['productid'],
               detail['statusid'],
               detail['remark'],
               detail['pjid'] ?? 0,
@@ -495,8 +498,10 @@ class _InventoryFormState extends State<InventoryForm> {
               children: [
                 TextFormField(
                   controller: _codeController,
-                  decoration:
-                      const InputDecoration(labelText: 'Transaction Code'),
+                  decoration: const InputDecoration(
+                    labelText: 'Transaction Code',
+                    hintText: 'Generated automatically',
+                  ),
                 ),
                 TextFormField(
                   controller: _dateController,
