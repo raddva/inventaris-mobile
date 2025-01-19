@@ -72,7 +72,11 @@ class _ListUserState extends State<ListUser> {
                       const Spacer(),
                       Switch(
                         value: isActive,
-                        onChanged: (value) => setState(() => isActive = value),
+                        onChanged: (value) {
+                          setState(() {
+                            isActive = value;
+                          });
+                        },
                       ),
                     ],
                   ),
@@ -82,7 +86,11 @@ class _ListUserState extends State<ListUser> {
                       const Spacer(),
                       Switch(
                         value: isAdmin,
-                        onChanged: (value) => setState(() => isAdmin = value),
+                        onChanged: (value) {
+                          setState(() {
+                            isAdmin = value;
+                          });
+                        },
                       ),
                     ],
                   ),
@@ -164,8 +172,11 @@ class _ListUserState extends State<ListUser> {
                         const Spacer(),
                         Switch(
                           value: isActive,
-                          onChanged: (value) =>
-                              setState(() => isActive = value),
+                          onChanged: (value) {
+                            setState(() {
+                              isActive = value;
+                            });
+                          },
                         ),
                       ],
                     ),
@@ -175,7 +186,11 @@ class _ListUserState extends State<ListUser> {
                         const Spacer(),
                         Switch(
                           value: isAdmin,
-                          onChanged: (value) => setState(() => isAdmin = value),
+                          onChanged: (value) {
+                            setState(() {
+                              isAdmin = value;
+                            });
+                          },
                         ),
                       ],
                     ),

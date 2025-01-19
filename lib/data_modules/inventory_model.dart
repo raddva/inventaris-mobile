@@ -3,12 +3,14 @@ class Inventory {
   final String transcode;
   final String transdate;
   final String remark;
+  final int categoryId;
 
   Inventory({
     required this.id,
     required this.transcode,
     required this.transdate,
     required this.remark,
+    required this.categoryId,
   });
 
   factory Inventory.fromJson(Map<String, dynamic> json) {
@@ -17,6 +19,7 @@ class Inventory {
       transcode: json['transcode'],
       transdate: json['transdate'],
       remark: json['remark'],
+      categoryId: json['category']['id'],
     );
   }
 }

@@ -99,9 +99,17 @@ class LoginController {
         }
 
         return myResponse;
+      } else if (result.statusCode == 403) {
+        return MyResponse<User>(
+          message: "User is not active.",
+        );
+      } else if (result.statusCode == 422) {
+        return MyResponse<User>(
+          message: "Invalid credentials. Please try again.",
+        );
       } else {
         return MyResponse<User>(
-          message: "Login failed. Please check your credentials.",
+          message: "Login failed. Unexpected error occurred.",
         );
       }
     } catch (e) {

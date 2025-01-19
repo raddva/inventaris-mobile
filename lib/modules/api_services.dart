@@ -36,7 +36,7 @@ class ApiService {
     }
   }
 
-  Future<void> addInventory(
+  Future<int> addInventory(
       String code, String date, String remark, int categoryId) async {
     try {
       final token = await getToken();
@@ -57,11 +57,14 @@ class ApiService {
           'transdate': date,
           'remark': remark,
           'categoryid': categoryId,
-          'createdby': userId
+          'createdby': userId,
         }),
       );
 
-      if (response.statusCode != 201) {
+      if (response.statusCode == 201) {
+        final responseData = jsonDecode(response.body);
+        return responseData['id'];
+      } else {
         throw Exception("Failed to add inventory: ${response.body}");
       }
     } catch (e) {
@@ -124,7 +127,8 @@ class ApiService {
   }
 
   // details
-  static Future<List<dynamic>> fetchInventoryDetails(int headerId) async {
+  Future<List<Map<String, dynamic>>?> fetchInventoryDetails(
+      int headerId) async {
     final token = await getToken();
 
     final response = await http.get(
@@ -135,16 +139,27 @@ class ApiService {
       },
     );
     if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      throw Exception('Failed to load inventory details');
+      final data = json.decode(response.body);
+      if (data is List) {
+        return data.map((e) => e as Map<String, dynamic>).toList();
+      }
     }
+    return null;
   }
 
   Future<void> addInventoryDetail(int headerId, int productId, int statusId,
-      String remark, int pjid, int qty) async {
+      String remark, int pjId, int qty) async {
     try {
       final token = await getToken();
+
+      Map<String, dynamic> requestBody = {
+        'headerid': headerId,
+        'productid': productId,
+        'statusid': statusId,
+        'remark': remark,
+        'qty': qty,
+        'pjid': pjId
+      };
 
       final response = await http.post(
         Uri.parse('$baseUrl/invdt'),
@@ -152,13 +167,7 @@ class ApiService {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode({
-          'headerid': headerId,
-          'productid': productId,
-          'statusid': statusId,
-          'remark': remark,
-          'qty': qty
-        }),
+        body: jsonEncode(requestBody),
       );
 
       if (response.statusCode != 201) {
@@ -179,7 +188,8 @@ class ApiService {
         'productid': productId,
         'statusid': statusId,
         'remark': remark,
-        'qty': qty
+        'qty': qty,
+        'pjid': pjid
       };
 
       final response = await http.put(
