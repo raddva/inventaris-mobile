@@ -502,6 +502,7 @@ class _InventoryFormState extends State<InventoryForm> {
                     labelText: 'Transaction Code',
                     hintText: 'Generated automatically',
                   ),
+                  enabled: false,
                 ),
                 TextFormField(
                   controller: _dateController,

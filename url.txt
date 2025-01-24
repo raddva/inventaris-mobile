@@ -1,0 +1,2 @@
+Github Repository API = https://github.com/ItzRyz/inventaris-api.git
+Canva Powerpoint = https://www.canva.com/design/DAGbZlD7htw/cdwDYMvtSrMBgNvgwiYk3w/edit?utm_content=DAGbZlD7htw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
